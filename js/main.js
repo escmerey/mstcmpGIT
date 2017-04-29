@@ -1,7 +1,15 @@
-/**
- * Обработка при загрузке страницы
- */
 $(function() {
+
+    // $("body").queryLoader2({
+    //     barColor: "#b61a1a",
+    //     backgroundColor: "#d9e1ff",
+    //     percentage: true,
+    //     barHeight: 10,
+    // minimumTime: 100000,
+    // });
+
+    $('select.nice-select').niceSelect();
+    $('.nice-select .list').perfectScrollbar();
 
     $('a[href*=#].anchor').bind("click", function(e) {
         var anchor = $(this);
@@ -16,257 +24,9 @@ $(function() {
         $(this).mask("+7 (999) 999-9999");
     });
 
-    $('.fullpage').fullpage({
-        sectionSelector: 'section',
-        navigation: true,
-        navigationPosition: 'right',
-        responsiveWidth: 1200,
-        onLeave: function(index, nextIndex, direction) {
-            if ($($(this)[0].offsetParent).find('section').eq(nextIndex - 1).hasClass('dark')) {
-                $('#fp-nav').removeClass('dark');
-            } else {
-                $('#fp-nav').addClass('dark');
-            };
-            if (nextIndex == 1) {
-                $('#fp-nav, .second_header').addClass('hidden');
-            } else {
-                $('#fp-nav, .second_header').removeClass('hidden');
-            }
-        },
-        afterLoad: function(anchorLink, index) {
-            //screen1 animate
-            TweenMax.set($('.fullpage > section:not(.active) .basic__backbg'), {
-                opacity: 0
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .basic__title'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .basic__desc'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .basic__left .btn'), {
-                opacity: 0,
-                x: -20
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .basic__right'), {
-                opacity: 0,
-                right: '-100%'
-            });
-            TweenMax.to($('.fullpage > section.active .basic__title'), 0.5, {
-                opacity: 1,
-                y: 0
-            });
-            TweenMax.to($('.fullpage > section.active .basic__desc'), 0.5, {
-                opacity: 1,
-                y: 0
-            }).delay(0.3);
-            TweenMax.to($('.fullpage > section.active .basic__left .btn'), 0.5, {
-                opacity: 1,
-                x: 0
-            }).delay(0.6);
-            TweenMax.set($('.fullpage > section.active .basic__backbg'), {
-                opacity: 1
-            });
-            TweenMax.staggerFrom($('.fullpage > section.active .basic__backbg img'), 1, {
-                left: -5000,
-                ease: Power2.easeOut
-            }, 0.1);
-            TweenMax.set($('.fullpage > section.active .basic__right'), {
-                opacity: 1
-            });
-            TweenMax.to($('.fullpage > section.active .basic__right'), 1, {
-                right: '0%',
-                ease: Back.easeOut.config(1.7)
-            }, 0.1);
-
-            //screen2 animate
-            TweenMax.set($('.fullpage > section:not(.active) .about__backbg'), {
-                opacity: 0
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .about__left'), {
-                x: '-100%'
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .about__right > *'), {
-                y: -20,
-                opacity: 0
-            });
-            TweenMax.staggerTo($('.fullpage > section.active .about__right > *'), 0.5, {
-                y: 0,
-                opacity: 1
-            }, 0.2);
-            TweenMax.to($('.fullpage > section.active .about__left'), 1, {
-                x: '0%',
-                ease: Back.easeOut.config(1.7)
-            });
-            TweenMax.set($('.fullpage > section.active .about__backbg'), {
-                opacity: 1
-            });
-            TweenMax.staggerFrom($('.fullpage > section.active .about__backbg img'), 1, {
-                left: 5000,
-                ease: Power2.easeOut
-            }, 0.1);
-
-            //screen3 animate
-            TweenMax.set($('.fullpage > section:not(.active) .idea__backbg'), {
-                opacity: 0
-            });
-            TweenMax.set($('.fullpage > section.active .idea__backbg'), {
-                opacity: 1
-            });
-            TweenMax.fromTo($('.fullpage > section.active .idea__backbg img'), 1, {
-                scale: 0,
-                ease: Power2.easeOut
-            }, {
-                scale: 1,
-                ease: Power2.easeOut
-            }, 0.2);
-            TweenMax.set($('.fullpage > section:not(.active) .idea__left'), {
-                x: '-100%'
-            });
-            TweenMax.to($('.fullpage > section.active .idea__left'), 1, {
-                x: '0%',
-                ease: Back.easeOut.config(1.7)
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .idea__right > *'), {
-                y: -20,
-                opacity: 0
-            });
-            TweenMax.staggerTo($('.fullpage > section.active .idea__right > *'), 0.5, {
-                y: 0,
-                opacity: 1
-            });
-
-            //screen4 animate
-            TweenMax.set($('.fullpage > section:not(.active) .camps__backbg'), {
-                opacity: 0
-            });
-            TweenMax.set($('.fullpage > section.active .camps__backbg'), {
-                opacity: 1
-            });
-            TweenMax.staggerFrom($('.fullpage > section.active .camps__backbg img'), 1, {
-                left: '50%',
-                top: '40%',
-                ease: Power2.easeOut
-            }, 0.1);
-
-            //screen4 animate
-            TweenMax.set($('.fullpage > section:not(.active) .success__title'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .success__sub_title'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.to($('.fullpage > section.active .success__title'), 0.5, {
-                opacity: 1,
-                y: 0
-            });
-            TweenMax.to($('.fullpage > section.active .success__sub_title'), 0.5, {
-                opacity: 1,
-                y: 0
-            }).delay(0.3);
-            TweenMax.set($('.fullpage > section:not(.active) .success__item:nth-child(odd)'), {
-                x: -5000
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .success__item:nth-child(even)'), {
-                x: 5000
-            });
-            TweenMax.to($('.fullpage > section.active .success__item:nth-child(odd)'), 1, {
-                x: 0
-            });
-            TweenMax.to($('.fullpage > section.active .success__item:nth-child(even)'), 1, {
-                x: 0
-            });
-
-            //screen5 animate
-            TweenMax.set($('.fullpage > section:not(.active) .camps__top'), {
-                transformPerspective: 600,
-                transformOrigin: '50% 100%',
-                rotationX: 25,
-                y: -100,
-                opacity: 0
-            });
-            TweenMax.to($('.fullpage > section.active .camps__top'), 0.5, {
-                opacity: 1,
-                rotationX: 0,
-                y: 0
-            });
-            TweenMax.set($('.fullpage > section:not(.active) .camps__slide'), {
-                transformPerspective: 600,
-                rotationY: 25,
-                opacity: 0,
-                x: -50
-            });
-            TweenMax.staggerTo($('.fullpage > section.active .camps__slide'), 0.5, {
-                opacity: 1,
-                rotationY: 0,
-                x: 0
-            }, 0.3);
-
-            //screen6 animate
-            TweenMax.set($('.fullpage > section:not(.active).reviews .h2'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.set($('.fullpage > section:not(.active).reviews .sub_title'), {
-                opacity: 0,
-                y: -20
-            });
-            TweenMax.to($('.fullpage > section.active.reviews .h2'), 0.5, {
-                opacity: 1,
-                y: 0
-            });
-            TweenMax.to($('.fullpage > section.active.reviews .sub_title'), 0.5, {
-                opacity: 1,
-                y: 0
-            }).delay(0.3);
-            TweenMax.set($('.fullpage > section:not(.active) .reviews__col'), {
-                transformPerspective: 600,
-                rotationY: 35,
-                opacity: 0,
-                x: -50
-            });
-            TweenMax.staggerTo($('.fullpage > section.active .reviews__col'), 0.5, {
-                opacity: 1,
-                rotationY: 0,
-                x: 0
-            }, 0.5);
-
-            //screen7 animate
-            TweenMax.set($('.fullpage > section:not(.active) .contacts__item'), {
-                opacity: 0,
-                x: -100
-            });
-            TweenMax.staggerTo($('.fullpage > section.active .contacts__item'), 0.5, {
-                opacity: 1,
-                x: 0,
-                ease: Back.easeOut.config(1.7)
-            }, 0.5);
-            TweenMax.set($('.fullpage > section:not(.active) .contacts__information__row'), {
-                opacity: 0,
-                y: -20
-            });
-            setTimeout(function () {
-                TweenMax.staggerTo($('.fullpage > section.active .contacts__information__row'), 0.5, {
-                    y: 0,
-                    opacity: 1
-                }, 0.2);
-            },1500);
-            TweenMax.set($('.fullpage > section:not(.active) .contacts__form'), {
-                opacity: 0,
-                x: -100
-            });
-            TweenMax.to($('.fullpage > section.active .contacts__form'), 1, {
-                opacity: 1,
-                x: 0
-            }).delay(1);
-        }
+    $(window).on("load resize scroll", function(e) {
+        $('.second_header--inner').next().css('marginTop', $('.second_header--inner').outerHeight());
     });
-
-    $('#fp-nav').addClass('hidden');
 
     var swiper = new Swiper('.basic__slider', {
         pagination: '.basic__controls',
@@ -339,24 +99,174 @@ $(function() {
         });
     });
 
-    // mapInitialize();
+    var swiper = new Swiper('.entry__day__slider', {
+        pagination: '.swiper-pagination',
+        paginationClickable: true
+    });
+
+    var swiper = new Swiper('.team__items', {
+        pagination: '.team__control',
+        paginationClickable: true,
+        spaceBetween: 30,
+        slidesPerView: 6,
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+    });
+
+    var swiper = new Swiper('.show__items', {
+        scrollbar: '.swiper-scrollbar',
+        scrollbarHide: false,
+        slidesPerView: 3,
+        centeredSlides: false,
+        spaceBetween: 65,
+        scrollbarDraggable: true,
+        grabCursor: true
+    });
+
+    $('.questions__item').accordion({
+        active: false,
+        collapsible: true,
+        heightStyle: "content"
+    });
+
+    $('.compensation__tabs').tabs({
+        hide: {
+            effect: "fade",
+            duration: 300
+        },
+        show: {
+            effect: "fade",
+            duration: 300
+        },
+    });
+
+    if ($('#map_canvas').length) {
+        mapInitialize();
+    }
 });
 
 function mapInitialize() {
 
-    var brooklyn = new google.maps.LatLng(59.92860856, 30.30128850);
-
     var stylez = [{
-        featureType: "all",
-        elementType: "all",
-        //  stylers: [
-        // { saturation: -100 } // <-- THIS
-        //  ]
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#242f3e"
+        }]
+    }, {
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#746855"
+        }]
+    }, {
+        "elementType": "labels.text.stroke",
+        "stylers": [{
+            "color": "#242f3e"
+        }]
+    }, {
+        "featureType": "administrative.locality",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#d59563"
+        }]
+    }, {
+        "featureType": "poi",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#d59563"
+        }]
+    }, {
+        "featureType": "poi.park",
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#263c3f"
+        }]
+    }, {
+        "featureType": "poi.park",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#6b9a76"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#38414e"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "geometry.stroke",
+        "stylers": [{
+            "color": "#212a37"
+        }]
+    }, {
+        "featureType": "road",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#9ca5b3"
+        }]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#746855"
+        }]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "geometry.stroke",
+        "stylers": [{
+            "color": "#1f2835"
+        }]
+    }, {
+        "featureType": "road.highway",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#f3d19c"
+        }]
+    }, {
+        "featureType": "transit",
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#2f3948"
+        }]
+    }, {
+        "featureType": "transit.station",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#d59563"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "geometry",
+        "stylers": [{
+            "color": "#17263c"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [{
+            "color": "#515c6d"
+        }]
+    }, {
+        "featureType": "water",
+        "elementType": "labels.text.stroke",
+        "stylers": [{
+            "color": "#17263c"
+        }]
     }];
+
+    var brooklyn = {
+        lat: 55.720923,
+        lng: 37.650928,
+    };
+
+    var center = {
+        lat: brooklyn.lat,
+        lng: brooklyn.lng - 0.013
+    }
 
     var mapOptions = {
         zoom: 16,
-        center: brooklyn,
+        center: center,
         mapTypeControl: false,
         scrollwheel: false,
         navigationControl: false,
@@ -369,11 +279,15 @@ function mapInitialize() {
     }
 
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var mapType = new google.maps.StyledMapType(stylez, {
+        name: "Night"
+    });
+    map.mapTypes.set('tehgrayz', mapType);
+    map.setMapTypeId('tehgrayz');
 
     marker = new google.maps.Marker({
         map: map,
-        draggable: true,
         position: brooklyn,
-        title: "Мы находимся тут!"
+        icon: '../images/ico/placeholder.png'
     });
 }
