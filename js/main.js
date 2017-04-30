@@ -67,7 +67,7 @@ $(function() {
     });
 
     $(window).on('load', function(event) {
-        $('.reviews__col').perfectScrollbar({
+        $('.reviews:not(.reviews--light) .reviews__col').perfectScrollbar({
             suppressScrollX: true
         });
     });
@@ -113,7 +113,7 @@ $(function() {
         prevButton: '.swiper-button-prev',
     });
 
-    var swiper = new Swiper('.show__items', {
+    var swiper = new Swiper('.show__items.swiper-container', {
         scrollbar: '.swiper-scrollbar',
         scrollbarHide: false,
         slidesPerView: 3,
@@ -140,7 +140,7 @@ $(function() {
         },
     });
 
-    if ($('#map_canvas').length) {
+    if ($('.map_canvas').length) {
         mapInitialize();
     }
 });
@@ -254,40 +254,51 @@ function mapInitialize() {
         }]
     }];
 
-    var brooklyn = {
-        lat: 55.720923,
-        lng: 37.650928,
-    };
+    $('.map_canvas').each(function(index, el) {
+        coord = $(this).attr('data-coord').split(',');
+        elem = "map_canvas_"+(index+1);
+        var brooklyn = {
+            lat: Number(coord[0]),
+            lng: Number(coord[1]),
+        };
+        if (!$(this).hasClass('contactsbox__right')) {
+            var center = {
+                lat: brooklyn.lat,
+                lng: brooklyn.lng - 0.013
+            }
+        }else {
+            var center = {
+                lat: brooklyn.lat,
+                lng: brooklyn.lng,
+            }
+        }
+        var mapOptions = {
+            zoom: 16,
+            center: center,
+            mapTypeControl: false,
+            scrollwheel: false,
+            navigationControl: false,
+            scaleControl: false,
+            draggable: true,
+        };
 
-    var center = {
-        lat: brooklyn.lat,
-        lng: brooklyn.lng - 0.013
-    }
+        if ($(window).width() <= 1180) {
+            mapOptions.draggable = false;
+        }
 
-    var mapOptions = {
-        zoom: 16,
-        center: center,
-        mapTypeControl: false,
-        scrollwheel: false,
-        navigationControl: false,
-        scaleControl: false,
-        draggable: true,
-    };
+        map = new google.maps.Map(document.getElementById(elem), mapOptions);
+        var mapType = new google.maps.StyledMapType(stylez, {
+            name: "Night"
+        });
+        map.mapTypes.set('tehgrayz', mapType);
+        map.setMapTypeId('tehgrayz');
 
-    if ($(window).width() <= 1180) {
-        mapOptions.draggable = false;
-    }
-
-    map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-    var mapType = new google.maps.StyledMapType(stylez, {
-        name: "Night"
+        marker = new google.maps.Marker({
+            map: map,
+            position: brooklyn,
+            icon: '../images/ico/placeholder.png'
+        });
     });
-    map.mapTypes.set('tehgrayz', mapType);
-    map.setMapTypeId('tehgrayz');
 
-    marker = new google.maps.Marker({
-        map: map,
-        position: brooklyn,
-        icon: '../images/ico/placeholder.png'
-    });
+
 }
